@@ -91,6 +91,8 @@ def install_pants_from_pex(
                 f"Exception:\n{e}"
             )
         try:
+            env = os.environ.copy()
+            env["PEX_TOOLS"] = "1"
             pants_venv_result = subprocess.run(
                 args=[
                     sys.executable,
@@ -105,7 +107,7 @@ def install_pants_from_pex(
                     "--disable-cache",
                     str(venv_dir),
                 ],
-                env={"PEX_TOOLS": "1"},
+                env=env,
                 check=True,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
